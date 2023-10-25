@@ -64,7 +64,7 @@ if st.button("Add Task"):
     cursor.execute("INSERT INTO urgency_rating (urgency) VALUES (?)", (urgency)
 
     
-    st.write(f"Task added: {task}")
+st.write(f"Task added: {task}")
 
 
 
