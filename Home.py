@@ -1,7 +1,9 @@
 import random
 import streamlit as st
 import sqlite3
+from streamlit_calendar import calendar
 import datetime
+import pandas as pd
 
 # Create or connect to an SQLite database
 conn = sqlite3.connect('planner.db')
@@ -32,6 +34,13 @@ cursor.execute('''
         subject TEXT
     )
 ''')
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS tasklist (
+        id INTEGER PRIMARY KEY,
+        task_list TEXT
+    )
+''')
+
 conn.commit()
 
 # Title and introduction
@@ -53,14 +62,29 @@ if st.button("Add Task"):
 st.subheader("All Tasks")
 tasks = cursor.execute("SELECT task FROM tasks").fetchall()
 due_dates = cursor.execute("SELECT due_date_input FROM due_date").fetchall()
-for i, task, due_date_input in range(enumerate(enumerate(tasks), enumerate(due_dates))):
-    st.write(f"{i + 1}. {int(task)}, due {int(due_date_input)}.")
 
-'''
-for i, due_date_input in enumerate(due_dates):
-    st.write(f"Due {due_date_input}.")
-    st.checkbox("Done?", key=i)
-'''
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.subheader("Name")
+    for i, task in enumerate(tasks):
+        st.write(f"{list(task)[0]}")
+
+with col2:
+    st.subheader("Due Date")
+    for i, due_date_input in enumerate(due_dates):
+        st.write(f"{list(due_date_input)[0]}")
+
+with col3:
+    st.subheader("Done?")
+    for i, task in enumerate(tasks):
+        st.checkbox("", key=i)
+
+with col4:
+    st.subheader("Urgency")
+    for i, task in enumerate(tasks):
+        st.number_input("", label_visibility="collapsed", min_value=0, max_value=9, key=random.random())
+
 # Notes and Resources
 st.subheader("Notes and Resources")
 note = st.text_area("Add a note or resource:")
@@ -73,7 +97,7 @@ if st.button("Save Note"):
 if st.button("View All Notes"):
     st.subheader("All Notes")
     notes = cursor.execute("SELECT note FROM notes").fetchall()
-    due_date_db = cursor.execute("SELECT ")
+    #due_date_db = cursor.execute("SELECT ")
     for i, note in enumerate(notes):
         st.write(f"{i + 1}. {note[0]}")
 
