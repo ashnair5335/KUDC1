@@ -55,7 +55,7 @@ st.write("Welcome to your digital planner!")
 # To-Do List
 st.subheader("To-Do List")
 task = st.text_input("Add a new task:")
-urgency = st.text_input ("Add urgency rating, 1-9") 
+urgency = st.text_input ("Add urgency rating, 0-9") 
 due_date_input = st.date_input("Due date:", value=None)
 
 if st.button("Add Task"):
