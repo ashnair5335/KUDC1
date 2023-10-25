@@ -93,8 +93,8 @@ with col3:
 
 with col4:
     st.subheader("Urgency")
-    for i, task in enumerate(tasks):
-        st.number_input("", label_visibility="collapsed", min_value=0, max_value=9, key=random.random())
+    for i, task in enumerate(urgency):
+        st.write(f"{list(urgency)[0]}")
 
 # Notes and Resources
 st.subheader("Notes and Resources")
