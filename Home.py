@@ -62,7 +62,7 @@ if st.button("Add Task"):
     cursor.execute("INSERT INTO tasks (task) VALUES (?)", (task,))
     cursor.execute("INSERT INTO due_date (due_date_input) VALUES (?)", (due_date_input,))
     cursor.execute("INSERT INTO urgency_rating (urgency) VALUES (?)", (urgency)
-    conn.commit()
+
     
     st.write(f"Task added: {task}")
 
