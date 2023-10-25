@@ -23,6 +23,11 @@ cursor.execute('''
     )
 ''')
 cursor.execute('''
+    CREATE TABLE IF NOT EXISTS urgency_rating
+        id INTERGER PRIMARY KEY,
+        urgency TEXT
+''')
+cursor.execute('''
     CREATE TABLE IF NOT EXISTS notes (
         id INTEGER PRIMARY KEY,
         note TEXT
@@ -50,12 +55,18 @@ st.write("Welcome to your digital planner!")
 # To-Do List
 st.subheader("To-Do List")
 task = st.text_input("Add a new task:")
+urgency = st.text_input ("Add urgency rating, 1-9") 
 due_date_input = st.date_input("Due date:", value=None)
+
 if st.button("Add Task"):
     cursor.execute("INSERT INTO tasks (task) VALUES (?)", (task,))
     cursor.execute("INSERT INTO due_date (due_date_input) VALUES (?)", (due_date_input,))
+    cursor.execute("INSERT INTO urgency_rating (urgency) VALUES (?)", (urgency)
     conn.commit()
+    
     st.write(f"Task added: {task}")
+
+
 
 # View all tasks
 #if st.button("View All Tasks"):
